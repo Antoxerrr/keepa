@@ -138,7 +138,11 @@ class Loader:
         uploaded_files = []
         failed_files = []
         for entry in self._entries:
-            self._validate_entry(entry)
+            try:
+                self._validate_entry(entry)
+            except NotADirectoryException as exc:
+                logging.error(str(exc))
+                continue
             files = self._get_files_to_upload(entry)
             bucket = entry['bucket_name']
             uploaded, failed = self._make_upload(files, bucket)
