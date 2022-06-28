@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 from pathlib import Path
 
 import boto3
@@ -7,6 +8,9 @@ import boto3
 from keepa.config import get_config
 from keepa.extensions import DateStorageHandler
 from keepa.loader import Loader
+
+CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(CURRENT_DIR))
 
 SOURCES_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SOURCES_DIR.parent
