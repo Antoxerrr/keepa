@@ -23,6 +23,9 @@ class Loader:
     def __init__(self, client, entries):
         self._client = client
         self._entries = entries
+        # Временные файлы, созданные скриптом, и подлежащие
+        # удалению по окончанию загрузки файлов.
+        self._trash = []
 
     @staticmethod
     def _append_date(file_path):
@@ -46,6 +49,7 @@ class Loader:
         else:
             output_filename = dir_path
         archive_path = shutil.make_archive(output_filename, 'zip', dir_path)
+        self._trash.append(archive_path)
         file_key = os.path.basename(archive_path)
         result = FileToUpload(
             file_path=archive_path,
@@ -134,6 +138,10 @@ class Loader:
         for file in files:
             os.remove(file.file_path)
 
+    def _remove_trash(self):
+        for file in self._trash:
+            os.remove(file)
+
     def upload(self):
         uploaded_files = []
         failed_files = []
@@ -156,3 +164,4 @@ class Loader:
             Не удалось загрузить: {len(failed_files)}. \n
         """)
         logging.info(result_msg)
+        self._remove_trash()
