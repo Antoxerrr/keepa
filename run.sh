@@ -1,3 +1,4 @@
 #!/bin/bash
 
-pipenv run python keepa/run.py
+# Указываем полный путь до pipenv, чтобы crontab его нашёл
+/usr/local/bin/pipenv run python /root/apps/keepa/keepa/run.py
