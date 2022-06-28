@@ -21,6 +21,8 @@ logging.basicConfig(
 )
 
 if __name__ == '__main__':
+    logging.info('Запущена отправка в хранилище')
+
     entries = CONFIG['entries']
 
     # Грузим файлы в storage
