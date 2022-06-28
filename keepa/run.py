@@ -21,18 +21,18 @@ logging.basicConfig(
     format='%(levelname)s: %(asctime)s %(message)s', level=logging.INFO,
     filename=os.path.join(PROJECT_DIR, 'logs.log'), encoding='utf-8'
 )
-# s3.list_objects(Bucket='academydb')['Contents']
+
 if __name__ == '__main__':
     logging.info('Запущена отправка в хранилище')
 
     entries = CONFIG['entries']
 
-    # # Грузим файлы в storage
-    # loader = Loader(s3, entries)
-    # loader.upload()
-    #
-    # # По необходимости обрабатываем хранение по датам
-    # for entry in entries:
-    #     if entry.get('date_handling', False):
-    #         dsh = DateStorageHandler(s3, entry.get('bucket_name'))
-    #         dsh.handle()
+    # Грузим файлы в storage
+    loader = Loader(s3, entries)
+    loader.upload()
+
+    # По необходимости обрабатываем хранение по датам
+    for entry in entries:
+        if entry.get('date_handling', False):
+            dsh = DateStorageHandler(s3, entry.get('bucket_name'))
+            dsh.handle()

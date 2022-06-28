@@ -5,7 +5,7 @@ import os
 import shutil
 from dataclasses import dataclass
 
-from keepa.exceptions import NotADirectoryException
+from exceptions import NotADirectoryException
 
 
 @dataclass
